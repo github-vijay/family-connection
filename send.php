@@ -1,5 +1,6 @@
 <?php
-
+//include 'session.php';
+session_start();
 if(isset($_GET['submit'])){
 	$text_to_send = $_POST['text_to_send'];
 	$date = date_create();
@@ -9,7 +10,7 @@ if(isset($_GET['submit'])){
 		echo $date->getTimestamp();
 	*/
 	$arr = array('user' => '', 'message' => '', 'timestamp' => '');
-	$arr['user'] = "sender";
+	$arr['user'] = $_SESSION['u_info']['Fname'];
 	$arr['message'] = $text_to_send;
 	$arr['timestamp'] = date_timestamp_get($date);
 	$json_obj = json_encode($arr);
