@@ -71,6 +71,9 @@
 						header('location:login.php?msg=Successfully registered. Please login!!');
 					else
 						header('location:signUp.php?err=Some error has occurred');
+
+					//$sql = "UPDATE `location` SET latitude=0,longitude=0 where user_id=last_id";
+					//insert default values into location table when user signs up
 						
 				}
 				else
