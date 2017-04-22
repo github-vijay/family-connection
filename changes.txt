@@ -5,3 +5,4 @@
 https://developers.google.com/maps/documentation/geocoding/web-service-best-practices#BuildingURLs
 https://developers.google.com/maps/documentation/geocoding/intro
 2) Insert default values into location table as soon as the user signs up so that user is remains in the table
+3) Add button to chatpage from where we can get another user's location. This button will call find_user_location.php and pass user_id as post parameter
