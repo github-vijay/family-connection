@@ -4,9 +4,9 @@
     <title>Geolocation</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfjLvsiyO7LQ8LabjBB33NNTcOzncRlMI&callback=initMap"
+    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfjLvsiyO7LQ8LabjBB33NNTcOzncRlMI&callback=initMap"
   type="text/javascript"></script>
-
+    <script async src="scripts/userAddressFinder.js"></script>
  
     <style>
       /* Always set the map height explicitly to define the size of the div
@@ -81,6 +81,7 @@
             infoWindow.open(map);
             map.setCenter(pos);
             updateUserLocationInDatabase(position);
+            initializeCurrent(position.coords.latitude,position.coords.longitude);
           }, function() {
             handleLocationError(true, infoWindow, map.getCenter());
           });
@@ -127,12 +128,44 @@ var geo_options = {
 
 var wpid = navigator.geolocation.watchPosition(geo_success, geo_error, geo_options);
       */
+//Check value is present or not & call google api function
+
+       //  function initializeCurrent(latcurr, longcurr) {
+       //       currgeocoder = new google.maps.Geocoder();
+       //       console.log(latcurr + "-- ######## --" + longcurr);
+
+       //       if (latcurr != '' && longcurr != '') {
+       //           var myLatlng = new google.maps.LatLng(latcurr, longcurr);
+       //           return getCurrentAddress(myLatlng);
+       //       }
+       // }
+
+       //  //Get current address
+
+       //   function getCurrentAddress(location) {
+       //        currgeocoder.geocode({
+       //            'location': location
+
+       //      }, function(results, status) {
+           
+       //          if (status == google.maps.GeocoderStatus.OK) {
+       //              console.log(results[0]);
+       //              // $("#address").html(results[0].formatted_address);
+       //          } else {
+       //              alert('Geocode was not successful for the following reason: ' + status);
+       //          }
+       //      });
+       //   }
+
+
+
     </script>
 
 <script
   src="https://code.jquery.com/jquery-3.2.1.min.js"
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
   crossorigin="anonymous"></script>
+  <div id="address"></div>
   </body>
 </html>
 
