@@ -9,13 +9,38 @@
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 	<script src="assets/bootstrap/js/jquery.min.js"></script>
 	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+	<!-- <script type="text/javascript">
+	  function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+      
+        reader.onload = function (e) {
+        $('#imagePreview').attr('src', e.target.result);
+      }
+            
+      reader.readAsDataURL(input.files[0]);
+      /*input.files[0].name; //displays the filename*/
+
+    }
+  }
+  $("#prof-image-upload").change(function(){
+    readURL(this);
+});
+</script> -->
 </head>
 <body style="position: relative;">
 <div id="user-info">
-	<div id="profile-photo"></div>
-	<div id="cover-photo" class="img-responsive">
+	<div id="profile-photo">
+		<!-- <form method="POST" action="coverImageAction.php" enctype="multipart/form-data">
+			<input type="file" name="cover_img" accept="image/*" required>
+			<input type="submit" name="change_cover_img" value="Update Cover Image">
+			</form> -->
+		<span>Change Profile Pic</span>
 	</div>
-	<span id="user-name">Vivek Panicker</span>
+	<div id="cover-photo">
+	</div>
+	<span id="change-cover">Change Cover Image</span>
+	<span id="user-name"><?php echo $_SESSION['uname'];?></span>
 </div>
 <div id="personal-info" style="position: absolute;left: 0px;background-color: #fff;height: auto;width:250px;">
 <?php
@@ -104,7 +129,7 @@
         var request = $.ajax({
           url: "profilePictureLoad.php",
           method: "POST",
-          //data : {umobile:<?php //echo $_SESSION['umobile'] ?>}
+          data : {'data' : 'user_image'}
         });
          
         request.done(function( response ) {
@@ -112,9 +137,27 @@
         });
          
         request.fail(function( jqXHR, textStatus ) {
-          console.log("Could not update user location in database!");
+          console.log("Could not successfully complete AJAX request.");
         });
 	
 </script>
+<!-- Making changes!!! 10/5/2017 -->
+<script type="text/javascript">
+        var request = $.ajax({
+          url: "profilePictureLoad.php",
+          method: "POST",
+          data : {'data' : 'user_cover_image'}
+        });
+         
+        request.done(function( response ) {
+           $('#cover-photo').css("background-image", "url("+ response +")"); 
+        });
+         
+        request.fail(function( jqXHR, textStatus ) {
+          console.log("Could not successfully complete AJAX request!");
+        });
+	
+</script>
+
 </body>
 </html>

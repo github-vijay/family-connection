@@ -1,13 +1,17 @@
-<?php include("dbconnect.php"); ?>
 <?php 
-				//$umobile=$_SESSION['umobile'];
-				$exe_query=$conn->query("SELECT `user_image` FROM `user` WHERE `user_no`=7890432567");
-				if($exe_query->num_rows>0){
-					while($userRow=$exe_query->fetch_assoc()){
-						$imageData = "data:image/jpeg;base64,".base64_encode($userRow['user_image']);
-						// echo "<div>".'<img src="data:image/jpeg;base64,'.base64_encode($userRow['user_image']).'" height="50" width="50"/>'."</div>";
-					}
-				}
+include("dbconnect.php"); ?>
+<?php 
+//`user_image`,`user_cover_image`
+$data = $_POST['data'];
+	if(!isset($_SESSION['profPicPath']) || !isset($_SESSION['coverPicPath'])){
+		$umobile = $_SESSION['umobile'];
+		$exe_query=$conn->query("SELECT `$data` FROM `user` WHERE `user_no`=$umobile");
+		if($exe_query->num_rows>0){
+			while($userRow=$exe_query->fetch_assoc()){
+				$imageData = "data:image/jpeg;base64,".base64_encode($userRow[$data]);
+				// echo "<div>".'<img src="data:image/jpeg;base64,'.base64_encode($userRow['user_image']).'" height="50" width="50"/>'."</div>";
+			}
+		}
 				// $my_file = 'assets/image.jpg';
 				// $handle = fopen($my_file,'w') or die('Cannot open file.');
 				// fwrite($handle,$image);
@@ -25,6 +29,18 @@
 	    $fileName = "assets/".$fileName;
 	    $imageData = base64_decode($imageData);
 	    file_put_contents($fileName, $imageData);
-	echo $fileName;
+	    if(strcmp($data,'user_cover_image'))
+	    	$_SESSION['coverPicPath'] = $fileName;
+	    else
+	    	$_SESSION['profPicPath'] = $fileName;
 
-	?>
+		echo $fileName;
+	}
+	else{
+		if(strcmp($data,'user_cover_image'))
+			echo $_SESSION['coverPicPath'];
+		else
+			echo $_SESSION['profPicPath'];
+	}
+
+?>	

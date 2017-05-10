@@ -15,7 +15,7 @@
 		$res4statusImage=mysqli_query($conn,$sql4statusImage);
 		
 		if ($res4statusImage) 
-			header('Location:timelineblob.php');
+			header('Location:designTest2.php');
 		else
 			die("".mysqli_error($conn));
 	}

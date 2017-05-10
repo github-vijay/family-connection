@@ -7,19 +7,20 @@
 		$sql="SELECT * FROM `user` WHERE `user_no`='$vmob' AND `upwd`='$vpwd'";
 
 		$res=mysqli_query($conn,$sql);
+
 		if ($res->num_rows > 0) {
     // output data of each row
-    	while($row = $res->fetch_assoc()) {
-			$_SESSION['umobile']=$vmob;
-			$_SESSION['uname']=$row['username'];
-			$_SESSION['umail']=$row['user_mail'];
-			$_SESSION['udob']=$row['user_dob'];
-			$_SESSION['ugender']=$row['user_gender'];
-			}
-			header('Location:timelineblob.php');
+	    	while($row = $res->fetch_assoc()) {
+				$_SESSION['umobile']=$vmob;
+				$_SESSION['uname']=$row['username'];
+				$_SESSION['umail']=$row['user_mail'];
+				$_SESSION['udob']=$row['user_dob'];
+				$_SESSION['ugender']=$row['user_gender'];
+				}
+				header('Location:designTest2.php');
 		}
 		else
-			die("".mysqli_error($conn));
+			echo "Username/Password incorrect!";
 	}
 
 ?>
