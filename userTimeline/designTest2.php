@@ -62,7 +62,7 @@
 	<form  method="post" action="statusImageBlobUpload.php" enctype="multipart/form-data">
 		<div class="status-container">
 			<label>Post a status or upload a photo!</label><br>
-			<textarea name="user_status" id="user_status" placeholder="What's up"></textarea><br>
+			<textarea name="user_status" id="user_status" placeholder="What's up?"></textarea><br>
 			<input type="file" name="file_img" accept="image/*"><br>
 			<input type="Submit" name="upload_status_image" value="Upload">
 		</div>
