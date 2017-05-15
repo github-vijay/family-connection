@@ -9,13 +9,12 @@
 		$sql="UPDATE `user` SET `user_image`='$profile_img' WHERE `user_no`='$user_mobile'";
 		$result=mysqli_query($conn,$sql);
 		if($result){
-			$sql4profileImage="INSERT INTO `status_image_upload`(`user_name`,`user_mob_number`,`user_dob`,`user_gender`,`upload_time`,`status`,`image`)
-															VALUES ('$username','$user_mobile','$userdob','$usergender',NOW(),'$username' ' updated his profile picture' ,'$profile_img')";
+			$sql4profileImage="INSERT INTO `status_image_upload`(`user_name`,`user_mob_number`,`user_dob`,`user_gender`,`upload_time`,`status`,`image`) VALUES ('$username','$user_mobile','$userdob','$usergender',NOW(),'$username' ' updated his profile picture' ,'$profile_img')";
 		
 			$res4profileImage=mysqli_query($conn,$sql4profileImage);
 		
 			if ($res4profileImage) 
-				header('Location:timelineblob.php');
+				header('Location:timeline2.php');
 			else
 				die("".mysqli_error($conn));
 

@@ -5,6 +5,11 @@ body{
 	background-image: url("../../assets/images/asfalt_light.png");
 /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
 }
+.navbar{
+	border-radius: 0px;
+	margin-bottom: 0px;
+	background-color: #f7f7f7;
+}
 
 /* The Modal (background) */
 .modal {
@@ -98,7 +103,7 @@ body{
 	border: 5px groove #5bf7c0;
 }
 
-#profile-photo > span{
+/*#profile-photo > span{
 	position: absolute;
 	bottom: 0px;
 	background-color: rgba(0,0,0,.7);
@@ -109,7 +114,7 @@ body{
 #profile-photo > span:hover{
 	color:#fff;
 	cursor: pointer;
-}
+}*/
 
 #cover-photo{
 	position: relative;
@@ -274,6 +279,28 @@ body{
 	font-weight: bold;
 }
 
+div.fileinputs {
+	position: relative;
+	top:118px;
+	background-color: rgba(0,0,0,0.4);
+}
+
+div.fakefile {
+	position: absolute;
+	z-index: 1;
+}
+
+input.prof_file {
+	position: relative;
+	bottom: 0px;
+	width: 94px
+	text-align: right;
+	-moz-opacity:0 ;
+	filter:alpha(opacity: 0);
+	opacity: 0;
+	z-index: 2;
+}	
+
 @media only screen and (max-width:768px){
 	.status-container{
 		width:465px;
@@ -333,3 +360,4 @@ body{
 
 
 }
+

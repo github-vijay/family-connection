@@ -17,7 +17,7 @@
 				$_SESSION['udob']=$row['user_dob'];
 				$_SESSION['ugender']=$row['user_gender'];
 				}
-				header('Location:designTest2.php');
+				header('Location:timeline2.php');
 		}
 		else
 			echo "Username/Password incorrect!";

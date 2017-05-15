@@ -1,0 +1,2 @@
+1) Change feed-box-header-image so that it shows only the image of the currently connected user
+2) 
