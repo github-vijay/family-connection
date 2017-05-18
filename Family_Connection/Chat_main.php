@@ -262,7 +262,7 @@ include 'connection.php';
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" name="create_group">Create Group</button>
+        <button type="button" class="btn btn-primary create_group" name="create_group">Create Group</button>
       </div>
     </div>
   </div>
