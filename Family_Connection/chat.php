@@ -17,25 +17,25 @@ include 'connection.php';
     	<ul>
         <?php
 			$user = $_SESSION['u_info']['ID'];
-			$sql = "SELECT * from `friends` where `User_ID` = '$user' order by UNIX_TIMESTAMP('Last_Chat') DESC";
+			$sql = "SELECT * from `friends` where `User_ID` = '$user'";   // order by UNIX_TIMESTAMP('Last_Chat') DESC
 			$query = mysqli_query($conn,$sql);
 			if(mysqli_num_rows($query)>0){
 				while($result = mysqli_fetch_array($query)){ 
 				$friendID = $result['Friend_ID'];
-				$sql_from_user = "SELECT ID,First_Name,Middle_Name,Last_Name,Profile_Pic from `user` where `Friend_ID` = '$friendID'";
-				$result_from_user = mysqli_fetch_array($sql_from_user);
+				$sql_from_user = "SELECT `ID`,`First_Name`,`Middle_Name`,`Last_Name`,`Profile_Pic` from `user` where `ID` = '$friendID'";
+				$query = mysqli_query($conn,$sql_from_user);
+				$result_from_user = mysqli_fetch_array($query);
 				
 		?>
 					<li>
                         <div class="chip">
-                            <img src="<?php echo $result_from_user['$result_from_user'];?>" alt="<?php echo $result_from_user['First_Name']; ?>" width="96" height="96">
+                            <img src="<?php echo $result_from_user['Profile_Pic'];?>" alt="<?php echo $result_from_user['First_Name']; ?>" width="96" height="96">
                             <?php if($result_from_user['Middle_Name'])
 										echo $result_from_user['First_Name']." ".$result_from_user['Last_Name']; 
 								  else
 								  		echo $result_from_user['First_Name']." ".$result_from_user['Middle_Name']." ".$result_from_user['Last_Name'];
 							?>
                         </div>
-                    <img src="" alt="">Friend 1
                     </li>     <!-- If friends pic is inserted then add the src path-->
             		<hr>  								<!-- Use php loop to fill up the friends and group list-->
 				<?php
@@ -43,9 +43,7 @@ include 'connection.php';
 			
 			}
 		?>
-        	<li><img src="">Friend 1</li>     <!-- If friends pic is inserted then add the src path-->
-            <hr>  								<!-- Use php loop to fill up the friends and group list-->
-            <li>Friend 2</li>
+        	
         </ul>
     
     </nav>

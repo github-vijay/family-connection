@@ -86,7 +86,33 @@ However, delay the fade out process for 2.5 seconds */
 </style>
 </head>
 
-<body>
+<body style="position: relative;">
+<nav class="navbar navbar-inverse navbar-static-top" style="margin:0px;">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Family Connection</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      
+      <ul class="nav navbar-nav navbar-right">
+        <a href="Logout.php"><span class="glyphicon glyphicon glyphicon-off" style="color:red; font-size:30px;"></span></a>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
 <div class="content no-margin no-padding">
 	<form method="post" id="form1" align="center">
     	<label>Phone Number:</label>
@@ -139,7 +165,7 @@ However, delay the fade out process for 2.5 seconds */
 					while($result = mysqli_fetch_array($query)){
 						if ($i % 4 == 0)
 						{
-							?><div class="container"><?php
+				?>			<div class="container"><?php
 						}
 						$friendID = $result['Friend_ID'];
 						$sql_for_user = "SELECT * from `user` where `ID` = '$friendID'";
@@ -242,9 +268,9 @@ However, delay the fade out process for 2.5 seconds */
 		</div>
 	</div>
 
-
-
 	
+
+
 </div>	
 
 

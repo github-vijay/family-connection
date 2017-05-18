@@ -19,7 +19,7 @@ include 'connection.php';
 				$sql = "update `user` set `Last_Seen` = '$date' where `ID` = '$id'";
 				
 				if(mysqli_query($conn,$sql))
-					header('location:read_write_file2.php?msg=Logged In Successfully!!');
+					header('location:Chat_main.php?msg=Logged In Successfully!!');
 					
 				mysqli_close($conn);
 				exit;

@@ -18,7 +18,7 @@
 		$file_size = $_FILES['profile_pic']['size'];
 		
 		if($file_name == "")
-			$profile_pic_path = "";
+			$profile_pic_path = "Profile/user_default.png";
 		else
 			$profile_pic_path = "Profile/".rand(00000,99999)."_".microtime(TRUE)."_".$file_name;
 		//echo $profile_pic_path;

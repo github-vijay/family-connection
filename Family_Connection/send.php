@@ -1,21 +1,19 @@
 <?php
 include 'session.php';
-if(isset($_GET['submit'])){
+include 'connection.php';
+
 	$text_to_send = $_POST['text_to_send'];
 	$date = date_create();
-	// echo date_timestamp_get($date);
-	/*
-		$date = new DateTime();
-		echo $date->getTimestamp();
-	*/
+	
 	$arr = array('user' => '', 'message' => '', 'timestamp' => '');
 	$arr['user'] = $_SESSION['u_info']['ID'];
 	$arr['message'] = $text_to_send;
 	$arr['timestamp'] = date_timestamp_get($date);
 	$json_obj = json_encode($arr);
-
-	$file = "people.txt";
-	file_put_contents($file, $json_obj."+,+", FILE_APPEND | LOCK_EX);
+	
+	$file = $_SESSION['ChatFile'];
+	
+	file_put_contents($file, "+,+".$json_obj, FILE_APPEND | LOCK_EX);
 	// if(file_put_contents($file, $json_obj, FILE_APPEND | LOCK_EX))
 	// 	echo "Success";
 	// else
@@ -27,10 +25,5 @@ if(isset($_GET['submit'])){
 	// print_r($obj);
 	// echo "<br>";
 	// echo $obj["user"];
-	echo $obj['message'];
-}
-else{
-	echo "Nothing to display.";
-}
-
+	?><span style="float:right;"><?php echo $obj['message'];?></span><?php
 ?>

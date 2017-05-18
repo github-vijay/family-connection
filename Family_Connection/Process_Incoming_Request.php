@@ -24,20 +24,25 @@
 			
 			if(mysqli_query($conn,$sql)){
 				$last_id = mysqli_insert_id($conn);
-				$sql = "INSERT into `friends` (User_ID,Friend_ID,Chat_ID) values ('$userID','$friendID','$last_id')";
+				$sql = "INSERT into `friends` (User_ID,Friend_ID,Chat_ID) values ('$userID','$friendID','$last_id');";
 				if(mysqli_query($conn,$sql)){
-					$sql = "UPDATE `friend_request` set status = '$type' where ID = '$requestID'";
+					$sql = "INSERT into `friends` (User_ID,Friend_ID,Chat_ID) values ('$friendID','$userID','$last_id');";
 					if(mysqli_query($conn,$sql)){
-						echo 'Accepted';
+						$sql = "UPDATE `friend_request` set status = '$type' where ID = '$requestID'";
+						if(mysqli_query($conn,$sql)){
+							echo 'Accepted';
+						}
+						else
+							die(mysqli_error($conn));
 					}
 					else
-						mysqli_error($conn);
+						die(mysqli_error($conn));
 				}
 				else
-					mysqli_error($conn);
+					die(mysqli_error($conn));
 			}
 			else
-				mysqli_error($conn);
+				die(mysqli_error($conn));
 			
 		}
 		else if($type == 2){
@@ -48,7 +53,7 @@
 				echo 'Rejected';
 			}
 			else
-				mysqli_error($conn);
+				die(mysqli_error($conn));
 			
 		}
 		else if($type == 3){
@@ -61,10 +66,10 @@
 					echo 'Blocked';
 				}
 				else
-					mysqli_error($conn);
+					die(mysqli_error($conn));
 			}
 			else
-				mysqli_error($conn);
+				die(mysqli_error($conn));
 		}
 	
 	}
