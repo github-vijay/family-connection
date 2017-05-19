@@ -4,11 +4,10 @@
 
 	$user= $_SESSION['u_info']['ID'];
 	$friend_group_ID = $_POST['Friend_Group_ID'];
-	$_SESSION['FriendID'] = $friend_group_ID;
-	$type = $_POST['Type'];
 	
+	$_SESSION['type'] = $type = $_POST['Type'];
 	if($type == "friend"){
-	
+		$_SESSION['F_ID']['FriendID'] = $friend_group_ID;
 		$sql = "SELECT `Chat_ID` from `friends` where `User_ID` = '$user' and `Friend_ID` = '$friend_group_ID'";
 		
 		$query = mysqli_query($conn,$sql);
@@ -61,10 +60,10 @@
 			$query_for_user = mysqli_query($conn,$sql);
 			
 			// Counting the number of the user
-			$sql = "SELECT count(*) from `group_memebers` where `Group_ID` = '".$result_from_group['ID']."'";
+			/*$sql = "SELECT max(*) from `group_members` where `Group_ID` = '".$result_from_group['ID']."'";
 			$query_num = mysqli_query($conn,$sql);
-			$number = mysqli_fetch_array($query_num);
-			$ID_User = $Name_User = array($number[0]);
+			$number = mysqli_fetch_array($query_num);*/
+			$User_ID_Name = array();
 			// End of counting the number of user
 			
 			
@@ -72,12 +71,13 @@
 				
 				$i = 0;
 				while($result_for_user = mysqli_fetch_array($query_for_user)){
-					$sql = "SELECT `First_Name`,`Middle_Name`,`Last_Name` from `user` where `ID` = '".$result_for_user['User_ID']."'";
+					$sql = "SELECT `ID`,`First_Name`,`Middle_Name`,`Last_Name` from `user` where `ID` = '".$result_for_user['User_ID']."'";
 					$query_for_name = mysqli_query($conn,$sql);
 					$res = mysqli_fetch_array($query_for_name);
-					$ID_User[$i] = $result_for_user['User_ID'];    // Save ID of the user
-					$Name_User[$i] = $res['First_Name'];   // Only first name taken into account, can take the middle name and the last name too.
-					 $i++;
+					$_SESSION['F_ID'][$res['ID']] = $res['First_Name'];
+					//echo $User_ID_Name[$res['ID']];    // Save ID of the user
+					/*$Name_User[$i] = $res['First_Name'];   // Only first name taken into account, can take the middle name and the last name too.
+					 $i++;*/
 				}
 			}
 			
@@ -106,12 +106,11 @@
 						<?php
 						}
 						else{
-							$i = 0;
-							while($str['user'] != $ID_User[$i]){
-								$i++;
-							}
-							?><span style="float:left;"><?php echo $Name_User[$i].": ".$str['message'];?></span><br>  <!-- Sending name of the user along with the messages-->
+							
+							if($str['user'] != null){
+							?><span style="float:left;"><?php echo $_SESSION['F_ID'][$str['user']].": ".$str['message'];?></span><br>  <!-- Sending name of the user along with the messages-->
 						<?php
+							}
 						}
 					}
 				}

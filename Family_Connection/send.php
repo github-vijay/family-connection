@@ -13,7 +13,7 @@ include 'connection.php';
 	
 	$file = $_SESSION['ChatFile'];
 	
-	file_put_contents($file, "+,+".$json_obj, FILE_APPEND | LOCK_EX);
+	file_put_contents($file, $json_obj."+,+", FILE_APPEND | LOCK_EX);
 	// if(file_put_contents($file, $json_obj, FILE_APPEND | LOCK_EX))
 	// 	echo "Success";
 	// else

@@ -149,7 +149,7 @@ include 'connection.php';
 			if(mysqli_num_rows($query)>0){
 				while($result = mysqli_fetch_array($query)){ 
 					//$grp_ID = $result['Group_ID'];
-					$sql_for_group = "SELECT * from `user` where `ID` = '".$result['Group_ID']."'";
+					$sql_for_group = "SELECT * from `group` where `ID` = '".$result['Group_ID']."'";
 					$query_from_group = mysqli_query($conn,$sql_for_group);
 					$result_from_group = mysqli_fetch_array($query_from_group);
 		?>
@@ -213,8 +213,8 @@ include 'connection.php';
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">Create a Group</h4>
       </div>
+      <form class="form-horizontal" method="post" id="create_grp">
       <div class="modal-body">
-        <form class="form-horizontal" method="post" id="create_grp">
         	<div class="form-group">
                 <label for="grp_name" class="col-sm-2 control-label">Group Name:</label>
                 <div class="col-sm-10">
@@ -251,19 +251,20 @@ include 'connection.php';
                 </div>
              </div>
              
-             <div class="form-group">
+             <!--<div class="form-group">
                 <label for="grp_image" class="col-sm-2 control-label">Group Image:</label>
                 <div class="col-sm-10">
                 	<input type="file" id="grp_image" name="grp_image">
                 </div>
-             </div>
+             </div>-->
              
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary create_group" name="create_group">Create Group</button>
-      </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary group-create" name="create_group">Create Group</button>
+          </div>
+      </form>
+
     </div>
   </div>
 </div>
@@ -289,7 +290,45 @@ function popSnackbar() {
 	setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
 }
 
+
 $(document).ready(function(){
+	
+	var friend_id = [];  // variable for storing friends id's while creating group
+	var file;
+	
+	$('#select_multiple_friends').multiselect({      //to store the variable friend_id with the friends id
+		onChange: function() {
+        	
+			friend_id = $('#select_multiple_friends').val();
+			//console.log(friend_id);
+		}
+	});
+	
+	$('.panel-body ul a').click(function(event){
+		event.preventDefault();
+		var id = $(this).attr('id');
+		var type = $(this).attr('data');
+		request = $.ajax({
+			type: "POST",
+			url: "Fetch_Chat.php",
+			contentType:"application/x-www-form-urlencoded; charset=utf-8",
+			data:{"Friend_Group_ID": id, "Type": type},
+			dataType:"text",		
+		});
+		request.done(function(response, textStatus, jqXHR){
+			document.getElementById("chat_messages").innerHTML = response;
+			document.getElementById('chat_messages').scrollTop = document.getElementById('chat_messages').scrollHeight;
+			callAjax();
+		});
+		request.fail(function (jqXHR, textStatus, errorThrown){
+	        console.error(
+	            "The following error occurred: "+
+	            textStatus, errorThrown
+	        );
+	    });
+	});
+	
+	
 	$("#form1").submit(function(event){
 	    
 	    event.preventDefault();
@@ -329,49 +368,24 @@ $(document).ready(function(){
 	});
 	
 	
-	$('.panel-body ul a').click(function(event){
-		event.preventDefault();
-		var id = $(this).attr('id');
-		var type = $(this).attr('data');
-		request = $.ajax({
-			type: "POST",
-			url: "Fetch_Chat.php",
-			contentType:"application/x-www-form-urlencoded; charset=utf-8",
-			data:{"Friend_Group_ID": id, "Type": type},
-			dataType:"text",		
-		});
-		request.done(function(response, textStatus, jqXHR){
-			document.getElementById("chat_messages").innerHTML = response;
-			document.getElementById('chat_messages').scrollTop = document.getElementById('chat_messages').scrollHeight;
-			callAjax();
-		});
-		request.fail(function (jqXHR, textStatus, errorThrown){
-	        console.error(
-	            "The following error occurred: "+
-	            textStatus, errorThrown
-	        );
-	    });
-	});
-	
-	<!-- Initialize the plugin: -->
-  
-    $('#select_multiple_friends').multiselect();
-	
 	
 	$('.group-create').click(function() {
-		//var grp_name = $('#grp_name').val();
-		var formData = new FormData($('create_grp')[0]);
-		
-		 $.ajax({
+		var grp_name = $('#grp_name').val();
+		//var frnd_name = friend_id;
+		console.log(friend_id);
+		request = $.ajax({
 		  type: "POST",
 		  url: "create_group.php",
-		  data: formData
+		  data: {"Group_Name":grp_name, "Friend_ID": friend_id}
 		});
 		request.done(function(response, textStatus, jqXHR){
+			console.log(response);
 			var res = document.createElement('div');
 			res.innerHTML = this.response;
 			document.getElementById('snackbar').appendChild(res);
+			$('#group_create').modal('hide');
 			popSnackbar();
+			
 			
 		});
 		request.fail(function (jqXHR, textStatus, errorThrown){
@@ -396,6 +410,7 @@ function sendAjaxReq(){
 	       console.log("Ajax req successful!");
 	       var $file_contents = response;
 	       document.getElementById("chat_messages").innerHTML = $file_contents;
+		   document.getElementById('chat_messages').scrollTop = document.getElementById('chat_messages').scrollHeight;
 	    });
 
 	    // Callback handler that will be called on failure
