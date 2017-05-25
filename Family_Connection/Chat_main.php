@@ -14,9 +14,64 @@ include 'connection.php';
 <script src="bootstrap-3.3.7-dist/js/jquery-3.2.1.min.js"></script>
 <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <script src="bootstrap-3.3.7-dist/bootstrap-multiselect-master/dist/js/bootstrap-multiselect.js"></script>
+
 </head>
 
 <body style="position:relative;">
+
+
+<!-- Start of the location modal -->
+<div class="modal fade" id="ask_share">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Select all those friends and groups whom you want to share your location with:</h4>
+            </div>
+            <div class="modal-body">
+              <p style="color: red;">* Your selection will be added with the previous ones. Press `Clear Previous Selection` to clear the previous selections.</p>
+
+                <button type="button" class="btn btn-danger" id="clear_previous">Clear Previous Selection</button><br><br>
+            	Friends:
+                <select id="all-friends" multiple="multiple">
+                    <?php
+                        $sql = "SELECT `ID`,`First_Name`,`Middle_Name`,`Last_Name`,`Profile_Pic` from `user` where `ID` IN (SELECT `Friend_ID` from `friends` where `User_ID` = '".$_SESSION['u_info']['ID']."') ";
+							$query_for_friend = mysqli_query($conn,$sql);
+							if(mysqli_num_rows($query_for_friend)>0){
+								
+								while($result = mysqli_fetch_array($query_for_friend)){
+									
+									if($result['Middle_Name']){
+									?>
+										<option value="<?php echo $result['ID'];?>"><?php echo ''.$result['First_Name']." ".$result['Last_Name'];?></option>
+                                    <?php
+									}
+								  	else{
+										?>
+								  		<option value="<?php echo $result['ID'];?>"><?php echo ''.$result['First_Name']." ".$result['Middle_Name']." ".$result['Last_Name'];?></option>
+									<?php	
+									}
+								}
+							}
+                        ?>
+                </select>
+                <br><br>
+                
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-success" id="share-location">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- End of the location modal -->
+
+
+
+
+
 <nav class="navbar navbar-inverse navbar-fixed-top" style="margin:0px;">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -45,11 +100,9 @@ include 'connection.php';
           <ul class="dropdown-menu">
             <li><a data-toggle="modal" data-target="#group_create">Create a Group</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="#">Settings</a></li>
+            <li><a href="setting.php">Settings</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="#">Change Cover Picture</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Change Profile Picure</a></li>
+            <li><a data-toggle="modal" data-target="#ask_share">Share Your Location</a></li>
           </ul>
         </li>
         <li><a href="Logout.php"><span class="glyphicon glyphicon glyphicon-off" style="color:red; font-size:12px;"></span></a></li>
@@ -92,19 +145,20 @@ include 'connection.php';
 					$query_from_user = mysqli_query($conn,$sql_from_user);
 					$result_from_user = mysqli_fetch_array($query_from_user);
 		?>
-					<a id = "<?php echo $result_from_user['ID'];?>" data = "friend" style="text-decoration:none;">
-                    	<li>
-                        	<div class="chip">
-                            	<img src="<?php echo $result_from_user['Profile_Pic'];?>" alt="<?php echo $result_from_user['First_Name']; ?>" width="70" height="70" style="border-radius:35px;">
+					
+                	 <li>
+                      <span><a id = "<?php echo $result_from_user['ID'];?>" data = "friend" info="<?php echo $result_from_user['First_Name'];?>" pic_info="<?php echo $result_from_user['Profile_Pic'];?>" style="text-decoration:none;">
+                            	<img src="<?php echo $result_from_user['Profile_Pic'];?>" alt="<?php echo $result_from_user['First_Name']; ?>" width="70" height="70" style="border-radius:35px;"> &nbsp;&nbsp;
                             	<?php if($result_from_user['Middle_Name']){
-										?><span><?php	echo $result_from_user['First_Name']." ".$result_from_user['Last_Name'];?></span><?php
-								}
-								  	  else{
-								  		?><span><?php	echo $result_from_user['First_Name']." ".$result_from_user['Middle_Name']." ".$result_from_user['Last_Name'];?> </span>
-                                        <?php } ?>
-                        	</div>
-                    	</li>
-                    </a>    
+    								            ?><span class="text_name"><?php	echo $result_from_user['First_Name']." ".$result_from_user['Last_Name'];?></span><?php
+    						              }
+    						  	           else{
+    						  		          ?><span class="text_name"><?php	echo $result_from_user['First_Name']." ".$result_from_user['Middle_Name']." ".$result_from_user['Last_Name'];?> </span>
+                                <?php } ?>
+                      </a></span>
+                      <button type="button" class="btn btn-danger" onclick="map(<?php $result_from_user['ID']?>)">Location</button>
+            	     </li>
+                  
             		<hr>  								
 				<?php
                 }
@@ -153,12 +207,10 @@ include 'connection.php';
 					$query_from_group = mysqli_query($conn,$sql_for_group);
 					$result_from_group = mysqli_fetch_array($query_from_group);
 		?>
-					<a id = "<?php echo $result_from_group['ID'];?>" data = "group" style="text-decoration:none;">
+					<a id = "<?php echo $result_from_group['ID'];?>" data = "group" info="<?php echo $result_from_group['Name'];?>" pic_info="<?php echo $result_from_group['Profile_Pic'];?>" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." style="text-decoration:none;">
                     	<li>
-                        	<div class="chip">
                             	<img src="<?php echo $result_from_group['Profile_Pic'];?>" alt="<?php echo $result_from_group['Name']; ?>" width="70" height="70" style="border-radius:35px;">
-                            	<span><?php	echo $result_from_group['Name'];?></span>
-                        	</div>
+                            	<span class="text_name"><?php	echo $result_from_group['Name'];?></span>
                     	</li>
                     </a>    
             		<hr>  								
@@ -183,8 +235,15 @@ include 'connection.php';
 
 	
     <div class="col-md-offset-2 col-md-8">
+    	<div id="chat_head">
+        	<div class="container-fluid">
+            	<img id="info_pic" src="" alt="" width="50" height="45" style="border-radius:35px;">
+                &nbsp;&nbsp;<span id="info_name"></span>
+            </div>
+        </div>
     	<form id="form1" name="form1">
 			<div id="send">
+            	
 				<div name="chat_messages" id="chat_messages" disabled>
 					
                     
@@ -236,12 +295,12 @@ include 'connection.php';
 									
 									if($result['Middle_Name']){
 									?>
-										<option value="<?php echo $result['ID'];?>" style="background-image:url('<?php echo $result['Profile_Pic'];?>')"><?php echo ''.$result['First_Name']." ".$result['Last_Name'];?></option>
+										<option value="<?php echo $result['ID'];?>"><?php echo ''.$result['First_Name']." ".$result['Last_Name'];?></option>
                                     <?php
 									}
 								  	else{
 										?>
-								  		<option value="<?php echo $result['ID'];?>" style="background-image:url('<?php echo $result['Profile_Pic'];?>')"><?php echo ''.$result['First_Name']." ".$result['Middle_Name']." ".$result['Last_Name'];?></option>
+								  		<option value="<?php echo $result['ID'];?>"><?php echo ''.$result['First_Name']." ".$result['Middle_Name']." ".$result['Last_Name'];?></option>
 									<?php	
 									}
 								}
@@ -270,10 +329,31 @@ include 'connection.php';
 </div>
 
 
-<!-- End of modal -->
+<!-- End of group modal -->
+
+
+
 
 <!-- Snackbar for confirmation -->
 <div id="snackbar"></div>
+<!-- End of the snackbar-->
+
+
+<!-- Start of the modal for maps-->
+
+<div id="mapModal" class="w3modal">
+
+  <!-- The Close Button -->
+  <span class="close" onclick="document.getElementById('mapModal').style.display='none'">&times;</span>
+
+  <!-- Modal Content (The Image) -->
+  <div id="map">My map will go here</div>
+
+  <!-- Modal Caption (Image Text) -->
+  <div id="caption"></div>
+</div>
+
+<!-- End of the modal for the map -->
 
 
 <script>
@@ -281,7 +361,12 @@ function callAjax(){
 	window.setInterval(sendAjaxReq,3000);	
 }
 function call_on_load(){
-	document.getElementById("chat_messages").innerHTML = "<h4>Nothing to display. Select any friend or group to start chatting.</h4>"
+	document.getElementById("chat_messages").innerHTML = "<h4>Nothing to display. Select any friend or group to start chatting.</h4>";
+  document.getElementById('text_to_send').disabled = true;
+  /*var chat = document.getElementById('text_to_send').setAttribute("disabled","disabled");
+  var attribute = document.createAttribute('disabled');
+  attribute.value = "disabled";
+  chat.setAttributeNode(attribute);*/
 }
 
 function popSnackbar() {
@@ -293,21 +378,26 @@ function popSnackbar() {
 
 $(document).ready(function(){
 	
-	var friend_id = [];  // variable for storing friends id's while creating group
+	var friend_id = friends = groups = [];  // variable for storing friends id's while creating group
 	var file;
 	
-	$('#select_multiple_friends').multiselect({      //to store the variable friend_id with the friends id
-		onChange: function() {
-        	
-			friend_id = $('#select_multiple_friends').val();
-			//console.log(friend_id);
-		}
-	});
+  //$('[data-toggle="popover"]').popover();    // for toggling pop-overs
+
+
 	
+
+
 	$('.panel-body ul a').click(function(event){
 		event.preventDefault();
 		var id = $(this).attr('id');
 		var type = $(this).attr('data');
+		var name = $(this).attr('info');
+		var pic = $(this).attr('pic_info');
+		//alert(pic);
+		$('#info_pic').attr('src',pic);
+		$('#info_pic').attr('alt',name);
+		$('#info_name').text(name);
+		$("#info_name").css("font-size", "24px");
 		request = $.ajax({
 			type: "POST",
 			url: "Fetch_Chat.php",
@@ -372,7 +462,7 @@ $(document).ready(function(){
 	$('.group-create').click(function() {
 		var grp_name = $('#grp_name').val();
 		//var frnd_name = friend_id;
-		console.log(friend_id);
+		//console.log(friend_id);
 		request = $.ajax({
 		  type: "POST",
 		  url: "create_group.php",
@@ -396,7 +486,75 @@ $(document).ready(function(){
 	    });
 	
 	});
+	
+	
+	$('#share-location').click(function(event){
+		event.preventDefault();
+    request = $.ajax({
+        type:"POST",
+        url:"select_friend_group_location.php",
+        data:{"friends":friends, "groups":groups}
+    });
+    request.done(function(response,textStatus,jqXHR){
+      console.log(response);
+      $('#ask_share').modal('hide');
+      window.location.href = "mapsdemo.html"
+    });
+    request.fail(function(jqXHR,textStatus,errorThrown){
+      console.error(
+        "The following error occured: "+ textStatus,errorThrown
+      );
+    });
+		
+	});
     
+    $('#select_multiple_friends').multiselect({      //to store the variable friend_id from modal group
+      includeSelectAllOption: true,
+            enableFiltering: true,
+    onChange: function() {
+      friend_id = $('#select_multiple_friends').val();
+      //console.log(friend_id);
+    }
+  });
+  
+  
+  $('#all-friends').multiselect({
+            //buttonContainer: '',
+      includeSelectAllOption: true,
+            enableFiltering: true,
+      onChange: function() {
+          
+        friends = $('#all-friends').val();
+      //console.log(friend_id);
+      }
+            
+  });
+  $('#all-groups').multiselect({
+            //buttonContainer: '',
+      includeSelectAllOption: true,
+            enableFiltering: true,
+      onChange: function() {
+          
+        groups = $('#all-groups').val();
+      //console.log(friend_id);
+      }
+  });
+
+  $('#clear_previous').click(function(){
+      request = $.ajax({
+        type:"post",
+        url:"clear_location_record.php"
+      });
+      request.done(function(response,jqxhr,textStatus){
+        console.log(response);
+        var res = document.createElement('div');
+        res.innerHTML = "Cleared previous records";
+        document.getElementById('snackbar').appendChild(res);
+        popSnackbar();
+      });
+  });
+
+
 });
 
 function sendAjaxReq(){
@@ -410,9 +568,8 @@ function sendAjaxReq(){
 	       console.log("Ajax req successful!");
 	       var $file_contents = response;
 	       document.getElementById("chat_messages").innerHTML = $file_contents;
-		   document.getElementById('chat_messages').scrollTop = document.getElementById('chat_messages').scrollHeight;
+		     document.getElementById('chat_messages').scrollTop = document.getElementById('chat_messages').scrollHeight;
 	    });
-
 	    // Callback handler that will be called on failure
 	    request.fail(function (jqXHR, textStatus, errorThrown){
 	        // Log the error to the console
@@ -422,9 +579,10 @@ function sendAjaxReq(){
 	        );
 	    });
 	}
+	
+	
+	
 call_on_load();
-</script>
-
-
+    </script>
 </body>
 </html>

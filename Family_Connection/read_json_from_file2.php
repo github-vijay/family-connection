@@ -19,7 +19,7 @@ if($_SESSION['type'] == 'friend'){
 		<span style="float:right;"><?php echo $str['message'];?></span><br/>
 		<?php
 		}
-		else {
+		else if($str['user'] != null){
 			?><span style="float:left;"><?php echo $str['message'];?></span><br>
 		<?php
 		}

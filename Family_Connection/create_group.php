@@ -5,7 +5,7 @@
 	
 	$grp_name = $_POST['Group_Name'];
 	$friend_id = $_POST['Friend_ID'];
-	$profile_pic_path = "Profile/group_default.png";
+	$profile_pic_path = "Profile/group_default.jpg";
 	
 	$file_name = "chatfiles/chat_group_".$_SESSION['u_info']['ID']."_".date('Ymdhis').".txt";
 			
