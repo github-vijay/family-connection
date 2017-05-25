@@ -7,8 +7,9 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Untitled Document</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Family Connection</title>
+<link href="https://fonts.googleapis.com/css?family=Kalam:300,400,700" rel="stylesheet">
 <link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="bootstrap-3.3.7-dist/js/jquery-3.2.1.min.js"></script>
 <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
@@ -21,10 +22,19 @@
 	padding: 0px;
 }
 
+.navbar-brand-mod{
+	font-family: 'Kalam', cursive;
+	font-weight: bold;
+	font-size: 28px;
+}
+
+.content{
+	background-color:	#DCDCDC;
+	padding : 20px 0 0;
+}
 
 .content form{
-	background-color:	#DCDCDC;
-	align: center;
+	padding-bottom: 15px;
 }
 
 form input.text{
@@ -34,6 +44,7 @@ form input.text{
 .cover{
 	border: 2px solid grey;
 	border-radius: 2px;
+	margin-bottom: 10px;
 }
 
 #snackbar {
@@ -82,11 +93,37 @@ However, delay the fade out process for 2.5 seconds */
     to {bottom: 0; opacity: 0;}
 }
 
-
+.cover a img{
+	width: 400px;
+	height: 200px;
+}
+.text{
+	text-align: center;
+	font-weight: bold;
+	background-color: #fff;
+}
+p{
+    margin: 0;
+    border: 1px solid #AAB;
+    /* padding-top: 10px; */
+    padding: 15px;
+}
+@media only screen and (max-width: 767px){
+	.friend-img{
+		width: 400px;
+		margin: 0 auto;
+	}
+}
+@media only screen and (max-width: 480px){
+	.friend-img{
+		width: 320px;
+		margin: 0 auto;
+	}
+}
 </style>
 </head>
 
-<body style="position: relative;">
+<body style="position: relative;background-color: #ccc;">
 <nav class="navbar navbar-inverse navbar-static-top" style="margin:0px;">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -97,7 +134,7 @@ However, delay the fade out process for 2.5 seconds */
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Family Connection</a>
+      <a class="navbar-brand navbar-brand-mod" href="#">Family Connection</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -113,11 +150,11 @@ However, delay the fade out process for 2.5 seconds */
   </div><!-- /.container-fluid -->
 </nav>
 
-<div class="content no-margin no-padding">
+<div class="content">
 	<form method="post" id="form1" align="center">
-    	<label>Phone Number:</label>
-    	<input type="text" name="phone" class="phone" id="phone" placeholder="Enter the Phone number of your friend" required maxlength="10"><br><br>
-        <input type="submit" value="SEARCH" name="submit">
+    	<label>Find friend using phone number : </label>
+    	<input type="text" name="phone" class="phone" id="phone" placeholder="Phone number" required maxlength="10"><br><br>
+        <input class="btn btn-primary" type="submit" value="SEARCH" name="submit">
         
     </form>
     <p id="showResult"></p>
@@ -173,7 +210,8 @@ However, delay the fade out process for 2.5 seconds */
 						if(mysqli_num_rows($query_result_user)){
 						$result_from_user = mysqli_fetch_array($query_result_user);
 				?>
-						<div class="col-md-3 col-sm-6">
+				<!-- ///change -->
+						<div class="col-md-3 col-sm-6 friend-img">
 							<div class="cover">
 								<a href="#"><img src="<?php echo $result_from_user['Profile_Pic'];?>" alt="<?php echo $result_from_user['First_Name'];?>" class="img-responsive"></a>
 									<div class="text">
@@ -188,7 +226,7 @@ However, delay the fade out process for 2.5 seconds */
 					}
 					if ($i % 4 == 3)
 						{
-							echo"</div><hr>";
+							echo"</div>";
 						}
 
 					$i++;
@@ -314,6 +352,8 @@ However, delay the fade out process for 2.5 seconds */
 	
 	$(document).ready(function(){
 		
+		document.getElementById("showResult").style.display = "none";
+
 		$("#form1").submit(function(event){
 			
 			event.preventDefault();
@@ -334,8 +374,8 @@ However, delay the fade out process for 2.5 seconds */
 			});
 
 			request.done(function (response, textStatus, jqXHR){
-				
 			   var new_messages = response;
+			   document.getElementById("showResult").style.display = "block";
 			   document.getElementById("showResult").innerHTML = new_messages;
 			   
 			});

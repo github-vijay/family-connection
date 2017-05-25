@@ -7,6 +7,7 @@ include 'connection.php';
 <html>
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Chat</title>
 <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="bootstrap-3.3.7-dist/bootstrap-multiselect-master/dist/css/bootstrap-multiselect.css">
@@ -14,10 +15,171 @@ include 'connection.php';
 <script src="bootstrap-3.3.7-dist/js/jquery-3.2.1.min.js"></script>
 <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <script src="bootstrap-3.3.7-dist/bootstrap-multiselect-master/dist/js/bootstrap-multiselect.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Kalam:300,400,700" rel="stylesheet">
+<style type="text/css">
+body{
+	position: relative;
+	background-image: url('background5.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	/*width: 100vw;*/
+	height: 100vh;
+	background-color: #000;
+}
+	#text_to_send{
+		position: relative;
+		overflow-y: scroll;
+		font-size: 20px;
+		color: #000;
+	}
+	input[type="submit"]{
+		position: absolute;
+		bottom: -35px;
+		right: 16px;
+		height: 35px;
+	}
+	#chat_messages{
+		border: 1px solid #eee;
+		padding: 20px;
+	}
+	.navbar-brand-mod{
+		 font-family: 'Kalam', cursive;
+		 font-weight: bold;
+		 font-size: 28px;
+	}
+	#chat_messages span{
+		max-width: 75%;
+		/*border:1px solid #000;*/
+		border-radius: 10px;
+		padding: 6px;
+		box-shadow: 1px 1px 1px #000;
+    margin: 2px 0px;
+    color:#000;
+    position: relative;
+    font-size: 16px;
+		/*padding: 10px;*/
+	}
+	#send{
+		background-color: rgba(16,7,1,0.8);
+	}
+	#chat_messages span.right{
+		box-shadow: 1px 1px 1px #000;
+		clear:both;
+		float:right;
+		background-color: #46f25a;
+	}
+	#chat_messages span.left{
+    	box-shadow: -2px 2px 1px #000;
+    	clear:both;
+    	float:left;
+    	background-color: #FF7;
+	}
+	#chat_messages span.right::before{
+		content: '';
+	    width: 0;
+	    height: 0;
+	    position: absolute;
+	    top: 0px;
+	    right: -10px;
+	    border-top: 13px solid #46f25a;
+	    border-left: 5px solid transparent;
+	    border-right: 15px solid transparent;
+	    border-bottom: 0px solid transparent;
+	}
+	#chat_messages span.left::before{
+	    content: '';
+	    width: 0;
+	    height: 0;
+	    position: absolute;
+	    top: 0px;
+	    left: -11px;
+	    border-top: 13px solid #ff7;
+	    border-left: 15px solid transparent;
+	    border-right: 5px solid transparent;
+	    border-bottom: 0px solid transparent;
+	}
+	/*input[type="text"]{
+		
+	}*/
 
+.bigEntrance{
+	animation-name: bigEntrance;
+	-webkit-animation-name: bigEntrance;	
+
+	animation-duration: 1.6s;	
+	-webkit-animation-duration: 1.6s;
+
+	animation-timing-function: ease-out;	
+	-webkit-animation-timing-function: ease-out;	
+
+	visibility: visible !important;			
+}
+
+@keyframes bigEntrance {
+	0% {
+		transform: scale(0.3) rotate(6deg) translateX(-30%) translateY(30%);
+		opacity: 0.2;
+	}
+	30% {
+		transform: scale(1.03) rotate(-2deg) translateX(2%) translateY(-2%);		
+		opacity: 1;
+	}
+	45% {
+		transform: scale(0.98) rotate(1deg) translateX(0%) translateY(0%);
+		opacity: 1;
+	}
+	60% {
+		transform: scale(1.01) rotate(-1deg) translateX(0%) translateY(0%);		
+		opacity: 1;
+	}	
+	75% {
+		transform: scale(0.99) rotate(1deg) translateX(0%) translateY(0%);
+		opacity: 1;
+	}
+	90% {
+		transform: scale(1.01) rotate(0deg) translateX(0%) translateY(0%);		
+		opacity: 1;
+	}	
+	100% {
+		transform: scale(1) rotate(0deg) translateX(0%) translateY(0%);
+		opacity: 1;
+	}		
+}
+
+@-webkit-keyframes bigEntrance {
+	0% {
+		-webkit-transform: scale(0.3) rotate(6deg) translateX(-30%) translateY(30%);
+		opacity: 0.2;
+	}
+	30% {
+		-webkit-transform: scale(1.03) rotate(-2deg) translateX(2%) translateY(-2%);		
+		opacity: 1;
+	}
+	45% {
+		-webkit-transform: scale(0.98) rotate(1deg) translateX(0%) translateY(0%);
+		opacity: 1;
+	}
+	60% {
+		-webkit-transform: scale(1.01) rotate(-1deg) translateX(0%) translateY(0%);		
+		opacity: 1;
+	}	
+	75% {
+		-webkit-transform: scale(0.99) rotate(1deg) translateX(0%) translateY(0%);
+		opacity: 1;
+	}
+	90% {
+		-webkit-transform: scale(1.01) rotate(0deg) translateX(0%) translateY(0%);		
+		opacity: 1;
+	}	
+	100% {
+		-webkit-transform: scale(1) rotate(0deg) translateX(0%) translateY(0%);
+		opacity: 1;
+	}				
+}
+</style>
 </head>
-
-<body style="position:relative;">
+<body>
 
 
 <!-- Start of the location modal -->
@@ -70,8 +232,6 @@ include 'connection.php';
 
 
 
-
-
 <nav class="navbar navbar-inverse navbar-fixed-top" style="margin:0px;">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -82,7 +242,7 @@ include 'connection.php';
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Family Connection</a>
+      <a class="navbar-brand navbar-brand-mod" href="#">Family Connection</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -100,17 +260,17 @@ include 'connection.php';
           <ul class="dropdown-menu">
             <li><a data-toggle="modal" data-target="#group_create">Create a Group</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="setting.php">Settings</a></li>
+            <li><a href="#">Settings</a></li>
             <li role="separator" class="divider"></li>
             <li><a data-toggle="modal" data-target="#ask_share">Share Your Location</a></li>
           </ul>
         </li>
-        <li><a href="Logout.php"><span class="glyphicon glyphicon glyphicon-off" style="color:red; font-size:12px;"></span></a></li>
+        <li><a href="Logout.php"><span class="glyphicon glyphicon-log-out" style="font-size:20px;"></span>&nbsp;Logout</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-<div style="width:100%;height:500px;margin-top:60px;">
+<div style="width:100%;height:500px;margin-top:60px;animation: bigEntrance 2s;">
 
 <div class="container-fluid">
 
@@ -145,20 +305,19 @@ include 'connection.php';
 					$query_from_user = mysqli_query($conn,$sql_from_user);
 					$result_from_user = mysqli_fetch_array($query_from_user);
 		?>
-					
-                	 <li>
-                      <span><a id = "<?php echo $result_from_user['ID'];?>" data = "friend" info="<?php echo $result_from_user['First_Name'];?>" pic_info="<?php echo $result_from_user['Profile_Pic'];?>" style="text-decoration:none;">
-                            	<img src="<?php echo $result_from_user['Profile_Pic'];?>" alt="<?php echo $result_from_user['First_Name']; ?>" width="70" height="70" style="border-radius:35px;"> &nbsp;&nbsp;
+					<a id = "<?php echo $result_from_user['ID'];?>" data = "friend" info="<?php echo $result_from_user['First_Name'];?>" pic_info="<?php echo $result_from_user['Profile_Pic'];?>" style="text-decoration:none;">
+                    	<li>
+                        	<div class="chip">
+                            	<img src="<?php echo $result_from_user['Profile_Pic'];?>" alt="<?php echo $result_from_user['First_Name']; ?>" width="70" height="70" style="border-radius:35px;">
                             	<?php if($result_from_user['Middle_Name']){
-    								            ?><span class="text_name"><?php	echo $result_from_user['First_Name']." ".$result_from_user['Last_Name'];?></span><?php
-    						              }
-    						  	           else{
-    						  		          ?><span class="text_name"><?php	echo $result_from_user['First_Name']." ".$result_from_user['Middle_Name']." ".$result_from_user['Last_Name'];?> </span>
-                                <?php } ?>
-                      </a></span>
-                      <button type="button" class="btn btn-danger" onclick="map(<?php $result_from_user['ID']?>)">Location</button>
-            	     </li>
-                  
+										?><span><?php	echo $result_from_user['First_Name']." ".$result_from_user['Last_Name'];?></span><?php
+								}
+								  	  else{
+								  		?><span><?php	echo $result_from_user['First_Name']." ".$result_from_user['Middle_Name']." ".$result_from_user['Last_Name'];?> </span>
+                                        <?php } ?>
+                        	</div>
+                    	</li>
+                    </a>    
             		<hr>  								
 				<?php
                 }
@@ -176,6 +335,7 @@ include 'connection.php';
   	</div>
     
     <!-- Group List -->
+
     
     <div class="panel-group col-md-6" id="accordion" role="tablist" aria-multiselectable="true">
       <div class="panel panel-default">
@@ -239,18 +399,15 @@ include 'connection.php';
         	<div class="container-fluid">
             	<img id="info_pic" src="" alt="" width="50" height="45" style="border-radius:35px;">
                 &nbsp;&nbsp;<span id="info_name"></span>
+                <a target="_blank" class="btn btn-primary" id="profile_info" style="float: right; margin-top: 7px;">Click here to get info</a>
             </div>
         </div>
     	<form id="form1" name="form1">
 			<div id="send">
-            	
 				<div name="chat_messages" id="chat_messages" disabled>
-					
-                    
-                    
 				</div>
-                <div><input type="text" name="text_to_send" id="text_to_send" autocomplete="off"></div>
-                <div><input type="submit" name="submit" value="submit"></div>
+                <div><input type="text" name="text_to_send" id="text_to_send" autocomplete="off" placeholder="Enter message here..." required="required"></div>
+                <div><input class="btn btn-primary" type="submit" name="submit" value="Send"></div>
 			</div>
 		</form>
     </div>
@@ -295,12 +452,12 @@ include 'connection.php';
 									
 									if($result['Middle_Name']){
 									?>
-										<option value="<?php echo $result['ID'];?>"><?php echo ''.$result['First_Name']." ".$result['Last_Name'];?></option>
+										<option value="<?php echo $result['ID'];?>" style="background-image:url('<?php echo $result['Profile_Pic'];?>')"><?php echo ''.$result['First_Name']." ".$result['Last_Name'];?></option>
                                     <?php
 									}
 								  	else{
 										?>
-								  		<option value="<?php echo $result['ID'];?>"><?php echo ''.$result['First_Name']." ".$result['Middle_Name']." ".$result['Last_Name'];?></option>
+								  		<option value="<?php echo $result['ID'];?>" style="background-image:url('<?php echo $result['Profile_Pic'];?>')"><?php echo ''.$result['First_Name']." ".$result['Middle_Name']." ".$result['Last_Name'];?></option>
 									<?php	
 									}
 								}
@@ -309,51 +466,28 @@ include 'connection.php';
                     </select>
                 </div>
              </div>
-             
              <!--<div class="form-group">
                 <label for="grp_image" class="col-sm-2 control-label">Group Image:</label>
                 <div class="col-sm-10">
                 	<input type="file" id="grp_image" name="grp_image">
                 </div>
              </div>-->
-             
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary group-create" name="create_group">Create Group</button>
-          </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary create_group" name="create_group">Create Group</button>
+      </div>
       </form>
-
     </div>
   </div>
 </div>
 
 
-<!-- End of group modal -->
-
-
-
+<!-- End of modal -->
 
 <!-- Snackbar for confirmation -->
 <div id="snackbar"></div>
-<!-- End of the snackbar-->
-
-
-<!-- Start of the modal for maps-->
-
-<div id="mapModal" class="w3modal">
-
-  <!-- The Close Button -->
-  <span class="close" onclick="document.getElementById('mapModal').style.display='none'">&times;</span>
-
-  <!-- Modal Content (The Image) -->
-  <div id="map">My map will go here</div>
-
-  <!-- Modal Caption (Image Text) -->
-  <div id="caption"></div>
-</div>
-
-<!-- End of the modal for the map -->
 
 
 <script>
@@ -361,12 +495,9 @@ function callAjax(){
 	window.setInterval(sendAjaxReq,3000);	
 }
 function call_on_load(){
-	document.getElementById("chat_messages").innerHTML = "<h4>Nothing to display. Select any friend or group to start chatting.</h4>";
-  document.getElementById('text_to_send').disabled = true;
-  /*var chat = document.getElementById('text_to_send').setAttribute("disabled","disabled");
-  var attribute = document.createAttribute('disabled');
-  attribute.value = "disabled";
-  chat.setAttributeNode(attribute);*/
+	document.getElementById("chat_messages").innerHTML = "<h4 style='color:#fff;'>Nothing to display. Select any friend or group to start chatting.</h4>";
+	document.getElementById('text_to_send').disabled = true;
+	//document.getElementById('profile_info').disabled = true;
 }
 
 function popSnackbar() {
@@ -375,50 +506,13 @@ function popSnackbar() {
 	setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
 }
 
-
 $(document).ready(function(){
-	
+
 	var friend_id = friends = groups = [];  // variable for storing friends id's while creating group
 	var file;
 	
   //$('[data-toggle="popover"]').popover();    // for toggling pop-overs
 
-
-	
-
-
-	$('.panel-body ul a').click(function(event){
-		event.preventDefault();
-		var id = $(this).attr('id');
-		var type = $(this).attr('data');
-		var name = $(this).attr('info');
-		var pic = $(this).attr('pic_info');
-		//alert(pic);
-		$('#info_pic').attr('src',pic);
-		$('#info_pic').attr('alt',name);
-		$('#info_name').text(name);
-		$("#info_name").css("font-size", "24px");
-		request = $.ajax({
-			type: "POST",
-			url: "Fetch_Chat.php",
-			contentType:"application/x-www-form-urlencoded; charset=utf-8",
-			data:{"Friend_Group_ID": id, "Type": type},
-			dataType:"text",		
-		});
-		request.done(function(response, textStatus, jqXHR){
-			document.getElementById("chat_messages").innerHTML = response;
-			document.getElementById('chat_messages').scrollTop = document.getElementById('chat_messages').scrollHeight;
-			callAjax();
-		});
-		request.fail(function (jqXHR, textStatus, errorThrown){
-	        console.error(
-	            "The following error occurred: "+
-	            textStatus, errorThrown
-	        );
-	    });
-	});
-	
-	
 	$("#form1").submit(function(event){
 	    
 	    event.preventDefault();
@@ -458,6 +552,43 @@ $(document).ready(function(){
 	});
 	
 	
+	$('.panel-body ul a').click(function(event){
+		event.preventDefault();
+		document.getElementById('text_to_send').disabled = false;
+		//document.getElementById('profile_info').disabled = false;
+		var id = $(this).attr('id');
+		var type = $(this).attr('data');
+		var name = $(this).attr('info');
+		var pic = $(this).attr('pic_info');
+		//alert(pic);
+		$('#info_pic').attr('src',pic);
+		$('#info_pic').attr('alt',name);
+		$('#info_name').text(name);
+		$("#info_name").css("font-size", "24px");
+
+		$('#profile_info').attr("href","profile_info.php?id="+id+"&type="+type);
+		
+		request = $.ajax({
+			type: "POST",
+			url: "Fetch_Chat.php",
+			contentType:"application/x-www-form-urlencoded; charset=utf-8",
+			data:{"Friend_Group_ID": id, "Type": type},
+			dataType:"text",		
+		});
+		request.done(function(response, textStatus, jqXHR){
+			document.getElementById("chat_messages").innerHTML = response;
+			document.getElementById('chat_messages').scrollTop = document.getElementById('chat_messages').scrollHeight;
+			callAjax();
+		});
+		request.fail(function (jqXHR, textStatus, errorThrown){
+	        console.error(
+	            "The following error occurred: "+
+	            textStatus, errorThrown
+	        );
+	    });
+	});
+	
+	
 	
 	$('.group-create').click(function() {
 		var grp_name = $('#grp_name').val();
@@ -486,39 +617,36 @@ $(document).ready(function(){
 	    });
 	
 	});
-	
-	
+
 	$('#share-location').click(function(event){
 		event.preventDefault();
-    request = $.ajax({
-        type:"POST",
-        url:"select_friend_group_location.php",
-        data:{"friends":friends, "groups":groups}
-    });
-    request.done(function(response,textStatus,jqXHR){
-      console.log(response);
-      $('#ask_share').modal('hide');
-      window.location.href = "mapsdemo.html"
-    });
-    request.fail(function(jqXHR,textStatus,errorThrown){
-      console.error(
-        "The following error occured: "+ textStatus,errorThrown
-      );
-    });
-		
+	    request = $.ajax({
+	        type:"POST",
+	        url:"select_friend_group_location.php",
+	        data:{"friends":friends, "groups":groups}
+	    });
+	    request.done(function(response,textStatus,jqXHR){
+	      console.log(response);
+	      $('#ask_share').modal('hide');
+	      window.location.href = "mapsdemo.html"
+	    });
+	    request.fail(function(jqXHR,textStatus,errorThrown){
+	      console.error(
+	        "The following error occured: "+ textStatus,errorThrown
+	      );
+	    });
 	});
-    
-    $('#select_multiple_friends').multiselect({      //to store the variable friend_id from modal group
+
+	$('#select_multiple_friends').multiselect({      //to store the variable friend_id from modal group
       includeSelectAllOption: true,
             enableFiltering: true,
-    onChange: function() {
-      friend_id = $('#select_multiple_friends').val();
+    	onChange: function() {
+      	friend_id = $('#select_multiple_friends').val();
       //console.log(friend_id);
-    }
-  });
-  
-  
-  $('#all-friends').multiselect({
+    	}
+  	});
+
+	$('#all-friends').multiselect({
             //buttonContainer: '',
       includeSelectAllOption: true,
             enableFiltering: true,
@@ -553,8 +681,7 @@ $(document).ready(function(){
         popSnackbar();
       });
   });
-
-
+    
 });
 
 function sendAjaxReq(){
@@ -568,8 +695,8 @@ function sendAjaxReq(){
 	       console.log("Ajax req successful!");
 	       var $file_contents = response;
 	       document.getElementById("chat_messages").innerHTML = $file_contents;
-		     document.getElementById('chat_messages').scrollTop = document.getElementById('chat_messages').scrollHeight;
 	    });
+
 	    // Callback handler that will be called on failure
 	    request.fail(function (jqXHR, textStatus, errorThrown){
 	        // Log the error to the console
@@ -579,10 +706,9 @@ function sendAjaxReq(){
 	        );
 	    });
 	}
-	
-	
-	
 call_on_load();
-    </script>
+</script>
+
+
 </body>
 </html>

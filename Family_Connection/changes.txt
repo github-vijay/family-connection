@@ -1,0 +1,22 @@
+Login Page : 
+Commented Snackbar script function, also commented out the div, style for snackbar
+
+Made many changes in Chat_main.php , send.php, Fetch_Chat.php and read_json_from_file2.php.
+
+Merge those changes with what ever changes you've made.
+
+Additional changes you have to make if you have not already made them :
+Create Group chat. (I know that you have already done it but I dont know how to create a group. So I could not apply style for it. So please do it. It is not that hard. Contact me if you have problem.)
+
+Also in the Chat_main.php file when I am talking to someone or a group, we need to show the name of the person or the group somewhere so that use dosent forget who he is chatting with. You can edit the HTML of the Accordion header to show who the person is chatting with, i.e. display the name over there.
+
+In the friends.php file the navbar only has the logout button. Add the other buttons!
+
+Also I could not see any Chat folder here. So create the folder and save the files in it.
+
+Give delete friend request option. Also Multiple friend requests should not be permitted.
+
+If you can add user last seen option in friends accordion then it would be good.
+
+Add link to timeline in Timleine list item in navbar in all pages.
+

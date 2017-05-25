@@ -13,7 +13,7 @@
 			
 			$userID = $_SESSION['u_info']['ID'];
 			
-			$file_name = "chatfiles/chat_".$userID."_".$friendID."_".date('Ymdhis').".txt";
+			$file_name = "chat_".$userID."_".$friendID."_".date('Ymdhis').".txt";
 			
 			//$file_path = "/chatfiles/".$file_name;
 			//echo $file_path;	

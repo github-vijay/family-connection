@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 18, 2017 at 08:48 AM
+-- Generation Time: May 25, 2017 at 06:11 PM
 -- Server version: 5.6.12-log
 -- PHP Version: 5.4.16
 
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `chat` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `FilePath` varchar(1000) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=46 ;
 
 --
 -- Dumping data for table `chat`
@@ -58,7 +58,11 @@ INSERT INTO `chat` (`ID`, `FilePath`) VALUES
 (14, 'chat_5_14_20170516101248.txt'),
 (15, 'chat_5_11_20170516101250.txt'),
 (16, 'chat_15_5_20170518065359.txt'),
-(17, 'chat_15_5_20170518065402.txt');
+(17, 'chat_15_5_20170518065402.txt'),
+(18, 'chatfiles/chat_5_17_20170518103627.txt'),
+(43, 'chatfiles/chat_group_5_20170518063015.txt'),
+(44, 'chatfiles/chat_group_5_20170518063555.txt'),
+(45, 'chatfiles/chat_group_5_20170518070124.txt');
 
 -- --------------------------------------------------------
 
@@ -92,7 +96,7 @@ CREATE TABLE IF NOT EXISTS `friends` (
   KEY `User_ID` (`User_ID`),
   KEY `Friend_ID` (`Friend_ID`),
   KEY `Chat_ID` (`Chat_ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=26 ;
 
 --
 -- Dumping data for table `friends`
@@ -110,7 +114,9 @@ INSERT INTO `friends` (`ID`, `User_ID`, `Friend_ID`, `Chat_ID`, `Last_Chat`) VAL
 (20, 15, 5, 16, '0000-00-00 00:00:00'),
 (21, 5, 15, 16, '0000-00-00 00:00:00'),
 (22, 15, 5, 17, '0000-00-00 00:00:00'),
-(23, 5, 15, 17, '0000-00-00 00:00:00');
+(23, 5, 15, 17, '0000-00-00 00:00:00'),
+(24, 5, 17, 18, '0000-00-00 00:00:00'),
+(25, 17, 5, 18, '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -127,7 +133,7 @@ CREATE TABLE IF NOT EXISTS `friend_request` (
   PRIMARY KEY (`ID`),
   KEY `From_User` (`From_User`),
   KEY `To_User` (`To_User`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
 
 --
 -- Dumping data for table `friend_request`
@@ -139,7 +145,8 @@ INSERT INTO `friend_request` (`ID`, `From_User`, `To_User`, `Time_of_Request`, `
 (13, 14, 5, '2017-05-16 10:12:07', 1),
 (14, 11, 5, '2017-05-16 10:12:25', 1),
 (15, 5, 6, '2017-05-17 11:40:56', 0),
-(16, 5, 15, '2017-05-18 06:53:29', 1);
+(16, 5, 15, '2017-05-18 06:53:29', 1),
+(17, 17, 5, '2017-05-18 10:36:06', 1);
 
 -- --------------------------------------------------------
 
@@ -157,7 +164,14 @@ CREATE TABLE IF NOT EXISTS `group` (
   PRIMARY KEY (`ID`),
   KEY `Created_By` (`Created_By`),
   KEY `Chat_ID` (`Chat_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+
+--
+-- Dumping data for table `group`
+--
+
+INSERT INTO `group` (`ID`, `Name`, `Creation_Date`, `Created_By`, `Profile_Pic`, `Chat_ID`) VALUES
+(13, 'badboys', '1495134084', 5, 'Profile/group_default.jpg', 45);
 
 -- --------------------------------------------------------
 
@@ -172,7 +186,14 @@ CREATE TABLE IF NOT EXISTS `group_admin` (
   PRIMARY KEY (`ID`),
   KEY `Group_ID` (`Group_ID`),
   KEY `User_ID` (`User_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `group_admin`
+--
+
+INSERT INTO `group_admin` (`ID`, `Group_ID`, `User_ID`) VALUES
+(3, 13, 5);
 
 -- --------------------------------------------------------
 
@@ -187,7 +208,18 @@ CREATE TABLE IF NOT EXISTS `group_members` (
   PRIMARY KEY (`ID`),
   KEY `User_ID` (`User_ID`),
   KEY `Group_ID` (`Group_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=26 ;
+
+--
+-- Dumping data for table `group_members`
+--
+
+INSERT INTO `group_members` (`ID`, `Group_ID`, `User_ID`) VALUES
+(21, 13, 5),
+(22, 13, 7),
+(23, 13, 8),
+(24, 13, 11),
+(25, 13, 14);
 
 -- --------------------------------------------------------
 
@@ -207,15 +239,25 @@ CREATE TABLE IF NOT EXISTS `like_record` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `location`
+-- Table structure for table `location_access_to_user`
 --
 
-CREATE TABLE IF NOT EXISTS `location` (
-  `user_id` int(11) DEFAULT NULL,
-  `latitude` float(20,17) DEFAULT NULL,
-  `longitude` float(20,17) DEFAULT NULL,
-  KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE IF NOT EXISTS `location_access_to_user` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `User_ID` int(20) NOT NULL,
+  `Friend_ID` int(20) NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `User_ID` (`User_ID`),
+  KEY `Friend_ID` (`Friend_ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=25 ;
+
+--
+-- Dumping data for table `location_access_to_user`
+--
+
+INSERT INTO `location_access_to_user` (`ID`, `User_ID`, `Friend_ID`) VALUES
+(23, 5, 11),
+(24, 5, 14);
 
 -- --------------------------------------------------------
 
@@ -259,27 +301,31 @@ CREATE TABLE IF NOT EXISTS `user` (
   `Password` varchar(50) NOT NULL,
   `Last_Seen` datetime DEFAULT NULL,
   `Profile_Pic` varchar(500) NOT NULL,
+  `Cover_Pic` longtext NOT NULL,
+  `latitude` float(20,17) DEFAULT NULL,
+  `longitude` float(20,17) DEFAULT NULL,
   `Active` int(1) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`ID`, `Public_ID`, `First_Name`, `Middle_Name`, `Last_Name`, `DOB`, `Gender`, `Phone`, `Email`, `Password`, `Last_Seen`, `Profile_Pic`, `Active`) VALUES
-(1, '0', 'df', 'sd', 'sd', '2017-04-10', 'M', '0', 'ds@fb.cvdn', '12345', '2017-04-13 09:39:10', '', 0),
-(2, '0', 'df', 'sd', 'sd', '2017-04-10', 'M', '0', 'ds@fb.cvdn', '12', '0000-00-00 00:00:00', '', 0),
-(3, '0', 'ds', 'w', 'a', '2017-04-10', 'M', '0', 'ds@d.h', '12234', '0000-00-00 00:00:00', '', 0),
-(4, 'ds4', 'ds', 'w', 'a', '2017-04-10', 'M', '0', 'ds23@d.h', 'w232', '0000-00-00 00:00:00', '', 0),
-(5, 'Vi5', 'Vijay', 'Kumar', 'Gupta', '2017-04-02', 'M', '1234567890', 'vijay@email.com', '12345', '2017-05-18 07:46:40', '', 0),
-(6, 'Vi6', 'Vivek', '', 'Panicker', '2017-04-03', 'M', '2147483647', 'vivek@email.com', '123', '2017-05-17 11:41:17', '/Profile/vivek.jpg', 0),
-(7, 'Pr7', 'Prabind', '', 'Singh', '2017-04-03', 'M', '2147483647', 'prabind@email.com', '12345', '2017-05-16 10:11:37', 'Profile/55807_1493469839.1462_Prabind.jpg', 0),
-(8, 'Vi8', 'Vivek', '', 'Panicker', '2017-04-15', 'M', '2147483647', 'viv@email.com', '12345', '2017-05-18 06:48:59', 'Profile/84753_1493471495.7501_vivek.jpg', 0),
-(11, 'Sn11', 'Snehajit', '', 'Gupta', '2017-04-02', 'M', '5432154321', 'snehajt@email.com', '12345', '2017-05-16 10:12:15', 'Profile/55181_1493550086.4129_snehajit.jpg', 0),
-(14, 'Su14', 'Surajit', '', 'Chawdhury', '2017-04-02', 'M', '6987451230', 'sura@rmail.com', '12345', '2017-05-16 10:11:58', 'Profile/2224_1493566489.5887_surajit.jpg', 0),
-(15, 'Sh15', 'Shraddha', '', 'Gupta', '2017-05-26', 'F', '5823691470', 'shra@emai.com', '12345', '2017-05-18 06:53:09', 'Profile/44543_1494269969.9264_shraddha.jpg', 0),
-(16, 'Aj16', 'Ajay', '', 'Saxena', '2017-05-01', 'M', '3216549870', 'ajay@email.com', '12345', '2017-05-09 04:31:33', 'Profile/49301_1494347478.544_786539.jpg', 0);
+INSERT INTO `user` (`ID`, `Public_ID`, `First_Name`, `Middle_Name`, `Last_Name`, `DOB`, `Gender`, `Phone`, `Email`, `Password`, `Last_Seen`, `Profile_Pic`, `Cover_Pic`, `latitude`, `longitude`, `Active`) VALUES
+(1, '0', 'df', 'sd', 'sd', '2017-04-10', 'M', '0', 'ds@fb.cvdn', '12345', '2017-04-13 09:39:10', '', '', NULL, NULL, 0),
+(2, '0', 'df', 'sd', 'sd', '2017-04-10', 'M', '0', 'ds@fb.cvdn', '12', '0000-00-00 00:00:00', '', '', NULL, NULL, 0),
+(3, '0', 'ds', 'w', 'a', '2017-04-10', 'M', '0', 'ds@d.h', '12234', '0000-00-00 00:00:00', '', '', NULL, NULL, 0),
+(4, 'ds4', 'ds', 'w', 'a', '2017-04-10', 'M', '0', 'ds23@d.h', 'w232', '0000-00-00 00:00:00', '', '', NULL, NULL, 0),
+(5, 'Vi5', 'Vijay', 'Kumar', 'Gupta', '2017-04-02', 'M', '1234567890', 'vijay@email.com', '12345', '2017-05-25 02:09:40', '', '', 22.45923233032226600, 88.16842651367188000, 0),
+(6, 'Vi6', 'Vivek', '', 'Panicker', '2017-04-03', 'M', '2147483647', 'vivek@email.com', '123', '2017-05-17 11:41:17', '/Profile/vivek.jpg', '', NULL, NULL, 0),
+(7, 'Pr7', 'Prabind', '', 'Singh', '2017-04-03', 'M', '2147483647', 'prabind@email.com', '12345', '2017-05-19 06:47:47', 'Profile/55807_1493469839.1462_Prabind.jpg', '', NULL, NULL, 0),
+(8, 'Vi8', 'Vivek', '', 'Panicker', '2017-04-15', 'M', '2147483647', 'viv@email.com', '12345', '2017-05-24 04:43:03', 'Profile/84753_1493471495.7501_vivek.jpg', '', NULL, NULL, 0),
+(11, 'Sn11', 'Snehajit', '', 'Gupta', '2017-04-02', 'M', '5432154321', 'snehajt@email.com', '12345', '2017-05-22 05:42:43', 'Profile/55181_1493550086.4129_snehajit.jpg', '', NULL, NULL, 0),
+(14, 'Su14', 'Surajit', '', 'Chawdhury', '2017-04-02', 'M', '6987451230', 'sura@rmail.com', '12345', '2017-05-18 07:53:21', 'Profile/2224_1493566489.5887_surajit.jpg', '', NULL, NULL, 0),
+(15, 'Sh15', 'Shraddha', '', 'Gupta', '2017-05-26', 'F', '5823691470', 'shra@emai.com', '12345', '2017-05-18 06:53:09', 'Profile/44543_1494269969.9264_shraddha.jpg', '', NULL, NULL, 0),
+(16, 'Aj16', 'Ajay', '', 'Saxena', '2017-05-01', 'M', '3216549870', 'ajay@email.com', '12345', '2017-05-09 04:31:33', 'Profile/49301_1494347478.544_786539.jpg', '', NULL, NULL, 0),
+(17, 'ab17', 'abcd', 'abcd', 'abcd', '2017-05-06', 'M', '1596357425', 'abcd@gmail.com', '12345', '2017-05-18 10:35:58', 'Profile/user_default.png', '', NULL, NULL, 0);
 
 --
 -- Constraints for dumped tables
@@ -329,7 +375,10 @@ ALTER TABLE `group_admin`
 --
 ALTER TABLE `group_members`
   ADD CONSTRAINT `group_members_ibfk_1` FOREIGN KEY (`User_ID`) REFERENCES `user` (`ID`),
-  ADD CONSTRAINT `group_members_ibfk_2` FOREIGN KEY (`Group_ID`) REFERENCES `group` (`ID`);
+  ADD CONSTRAINT `group_members_ibfk_2` FOREIGN KEY (`Group_ID`) REFERENCES `group` (`ID`),
+  ADD CONSTRAINT `group_members_ibfk_3` FOREIGN KEY (`User_ID`) REFERENCES `user` (`ID`),
+  ADD CONSTRAINT `group_members_ibfk_4` FOREIGN KEY (`User_ID`) REFERENCES `user` (`ID`),
+  ADD CONSTRAINT `group_members_ibfk_5` FOREIGN KEY (`Group_ID`) REFERENCES `group` (`ID`);
 
 --
 -- Constraints for table `like_record`
@@ -339,10 +388,11 @@ ALTER TABLE `like_record`
   ADD CONSTRAINT `like_record_ibfk_2` FOREIGN KEY (`Upload_ID`) REFERENCES `status_image_upload` (`ID`);
 
 --
--- Constraints for table `location`
+-- Constraints for table `location_access_to_user`
 --
-ALTER TABLE `location`
-  ADD CONSTRAINT `location_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`ID`);
+ALTER TABLE `location_access_to_user`
+  ADD CONSTRAINT `location_access_to_user_ibfk_1` FOREIGN KEY (`User_ID`) REFERENCES `user` (`ID`),
+  ADD CONSTRAINT `location_access_to_user_ibfk_2` FOREIGN KEY (`Friend_ID`) REFERENCES `user` (`ID`);
 
 --
 -- Constraints for table `status_image_upload`

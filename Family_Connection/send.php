@@ -13,7 +13,7 @@ include 'connection.php';
 	
 	$file = $_SESSION['ChatFile'];
 	
-	file_put_contents($file, $json_obj."+,+", FILE_APPEND | LOCK_EX);
+	file_put_contents($file, "+,+".$json_obj, FILE_APPEND | LOCK_EX);
 	// if(file_put_contents($file, $json_obj, FILE_APPEND | LOCK_EX))
 	// 	echo "Success";
 	// else
@@ -25,5 +25,5 @@ include 'connection.php';
 	// print_r($obj);
 	// echo "<br>";
 	// echo $obj["user"];
-	?><span style="float:right;"><?php echo $obj['message'];?></span><?php
+	?><span class="right"><?php echo $obj['message'];?></span><?php
 ?>
