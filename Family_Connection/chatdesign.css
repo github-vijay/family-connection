@@ -1,0 +1,127 @@
+@charset "utf-8";
+/* CSS Document */
+
+html{
+	padding: 0px;
+	margin: 0px;
+}
+body{
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	background-color:#CCC;
+	width:100%;
+	min-height: auto;	
+}
+
+#container{
+	border:1px solid #000;
+	min-height:auto;
+}
+
+header{
+	padding:0px;
+	margin:0px;
+	height:75px;
+	background-color:#0F6;
+}
+#left{
+	float: left;
+}
+#left li{
+	list-style-type:none;
+	margin:0px;
+	padding:0px;
+	font-size:26px;
+	font-family:Arial, Helvetica, sans-serif;
+}
+#right{
+	float:right;
+	margin-top: 20px;
+}
+#right ul{
+	padding-bottom:0px;
+}
+#right li{
+	list-style-type:none;
+	margin:0px;
+	padding:0px;
+	font-size:16px;
+	display: inline-block;
+	font-family:Arial, Helvetica, sans-serif;
+	text-transform:uppercase;
+}
+#right a{
+	text-decoration:none;
+	border:1px solid;
+	margin-right:25px;
+	padding:5px;
+	border-radius:10px;
+}
+#right a:hover{
+	color:#930;
+}
+#main{
+	width:100%;
+	min-height:auto;
+}
+nav{
+	
+	float:left;
+	width:25%;
+	background-color:#CFBFFF;
+	height:525px;
+	overflow: auto;
+}
+
+nav ul{
+	padding-left:10px;
+	list-style-type:none;
+	font-size:25px;
+}
+
+section{
+	height:525px;
+	background-color:#FFFF9D;
+}
+#chatarea{
+	width:75%;
+	height:475px;
+	overflow:auto;
+	padding:7px;
+}
+
+#chatbox{
+	width:75%;
+	height:50px;
+}
+
+footer{
+	width: 100%;
+	height:50px;
+	background-color:#4FE365;
+	padding:10px;
+}
+
+input[type="text"] {
+	height:30px;
+    width: 60%;
+}
+.chip {
+    display: inline-block;
+    padding: 0 25px;
+    height: 50px;
+    font-size: 16px;
+    line-height: 50px;
+    border-radius: 25px;
+    background-color: #f1f1f1;
+}
+
+.chip img {
+    float: left;
+    margin: 0 10px 0 -25px;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}

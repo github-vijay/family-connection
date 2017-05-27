@@ -1,0 +1,336 @@
+body{
+	margin:0px;
+	padding:0px;
+	background-color: #001c29;
+	background-image: url("../../assets/images/asfalt_light.png");
+/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+}
+
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    height : auto;
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0} 
+    to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
+
+/* The Close Button */
+.close {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-header {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+}
+
+.modal-body {padding: 2px 16px;height:300px;}
+
+.modal-footer {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+    height:50px;
+}
+/*Modal ends*/
+
+#user-info{
+	position: relative;
+	width:100%;
+	height: 300px;
+}
+#profile-photo{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	height:150px;
+	width: 150px;
+	/*background-image: url('../../assets/images/plantingtrees11.jpg');*/
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	margin:0 auto;
+	border: 5px groove #5bf7c0;
+}
+
+#profile-photo > span{
+	position: absolute;
+	bottom: 0px;
+	background-color: rgba(0,0,0,.7);
+	width: 100%;
+	transition: 0.5s;
+}
+
+#profile-photo > span:hover{
+	color:#fff;
+	cursor: pointer;
+}
+
+#cover-photo{
+	position: relative;
+	top: 0;
+	left: 0;
+	z-index: -1;
+	width: 100%;
+	height: 100%;
+	background-image: url('../../assets/images/placeholder.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position:center;	
+}
+
+#change-cover{
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	background-color: rgba(0,0,0,0.7);
+	transition: 0.5s;
+}
+
+#change-cover:hover{
+	color:#fff;
+	cursor: pointer;
+}
+
+#user-name{
+	position: absolute;
+	font-size: 26px;
+	font-weight: bold;
+	color: #fff;
+	transform : translate(200px,0px);	
+	bottom: 0;
+   	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+#status{
+	width: 100%;
+	height: 300px;
+	text-align: center;
+	padding-top: 15px;
+	font-size: 20px;
+}
+
+
+
+#status form div > label{
+	color: #000;
+}
+
+.status-container{
+	width:500px;
+	padding: 10px;
+	margin:0 auto;
+	height: auto;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  	transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+
+
+.status-container:hover{
+	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+#status form div textarea{
+	resize: none;
+	text-align: left;
+	width:400px;
+	height:150px;
+	color: #000;
+}
+
+.feed-box{
+	width:500px;
+	padding: 10px;
+	margin:10px auto;
+	height: auto;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  	transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.feed-box:hover{
+	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.feed-box-header{
+	position: relative;
+	height:80px;
+	width: 100%;
+	border: 1px solid #000;
+}
+
+.feed-box-header-image{
+	height: 100%;
+	width:80px;
+	display: inline-block;
+	background-image: url('../../assets/images/plantingtrees11.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.feed-box-user-name{
+	position: absolute;
+	top:10px;
+	left: 90px;
+}
+
+.feed-box-user-name > span:nth-child(1){
+	color : blue;
+	font-weight: bold;
+}
+
+.feed-box-image{
+	width:100%;
+}
+
+.feed-box-image-div{
+	/*border:1px solid #000;*/
+	width: 100%;
+	margin-bottom : 10px;
+}
+
+.feed-box-text{
+	width:100%;
+	padding: 15px;
+	/*margin:5px auto;*/
+	/*margin-bottom: 10px;*/
+	height: auto;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	/*box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);*/
+  	transition: all 0.3s cubic-bezier(.25,.8,.25,1);	
+}
+
+.feed-box-comments{
+	width:100%;
+	padding: 5px;
+	/*margin:5px auto;*/
+	height: auto;
+	background-color: #fff;
+	border-top: 1px solid #ccc;
+  	transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.form-comment-upload input:nth-child(2){
+	margin-top: 10px;
+}
+
+#feeds > span{
+	margin-top : 10px;
+}
+
+.feed-box-comments span{
+	color:blue;
+	font-weight: bold;
+}
+
+@media only screen and (max-width:768px){
+	.status-container{
+		width:465px;
+		padding:10px;
+	}
+	#status form div textarea{
+		width:80%;
+	}
+
+	.feed-box{
+		width:465px;
+	}
+
+	.feed-box-text{
+		width: 100%;
+		padding: 10px;
+	}
+
+	.feed-box-comments{
+		width: 100%;
+		padding: 10px;
+	}
+	#user-name{
+		font-size:22px;
+		transform: translate(150px,0px);
+	}
+
+}
+
+@media only screen and (max-width:480px){
+	.status-container{
+		width:100%;
+		padding:5px;
+		font-size: 16px;
+	}
+	#status form div textarea{
+		width:80%;
+	}
+
+	.feed-box{
+		width: 100%;
+		padding:10px;
+		font-size: 16px;	
+	}
+
+	.feed-box-text{
+		width: 100%;
+		padding:10px;
+		font-size: 16px;			
+	}
+
+	.feed-box-comments{
+		width: 100%;
+		padding:10px;
+		font-size: 16px;			
+	}
+
+
+}
