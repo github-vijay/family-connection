@@ -29,6 +29,7 @@
 }
 
 .content{
+	margin-top: 60px;
 	background-color:	#DCDCDC;
 	padding : 20px 0 0;
 }
@@ -124,7 +125,7 @@ p{
 </head>
 
 <body style="position: relative;background-color: #ccc;">
-<nav class="navbar navbar-inverse navbar-static-top" style="margin:0px;">
+<nav class="navbar navbar-inverse navbar-fixed-top" style="margin:0px;">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -144,7 +145,10 @@ p{
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        <a href="Logout.php"><span class="glyphicon glyphicon glyphicon-off" style="color:red; font-size:30px;"></span></a>
+      	<li><a href="designTest2.php">Timeline</a></li>
+        <li><a href="Chat_main.php">Chat</a></li>
+        <li><a href="friends.php">Friends</a></li>
+        <li><a href="Logout.php"><span class="glyphicon glyphicon-log-out" style="font-size:17px;"></span>&nbsp;Logout</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

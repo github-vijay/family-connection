@@ -5,6 +5,8 @@
 	$user= $_SESSION['u_info']['ID'];
 	$friend_group_ID = $_POST['Friend_Group_ID'];
 	
+	$_SESSION['F_ID'] = null;
+
 	$_SESSION['type'] = $type = $_POST['Type'];
 	if($type == "friend"){
 		$_SESSION['F_ID']['FriendID'] = $friend_group_ID;

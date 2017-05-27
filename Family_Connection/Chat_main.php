@@ -252,7 +252,7 @@ body{
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-      	<li><a href="timeline2.php">Timeline</a></li>
+      	<li><a href="designTest2.php">Timeline</a></li>
         <li><a href="Chat_main.php">Chat</a></li>
         <li><a href="friends.php">Friends</a></li>
         <li class="dropdown">
@@ -260,12 +260,12 @@ body{
           <ul class="dropdown-menu">
             <li><a data-toggle="modal" data-target="#group_create">Create a Group</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="#">Settings</a></li>
+            <li><a href="setting.php">Settings</a></li>
             <li role="separator" class="divider"></li>
             <li><a data-toggle="modal" data-target="#ask_share">Share Your Location</a></li>
           </ul>
         </li>
-        <li><a href="Logout.php"><span class="glyphicon glyphicon-log-out" style="font-size:20px;"></span>&nbsp;Logout</a></li>
+        <li><a href="Logout.php"><span class="glyphicon glyphicon-log-out" style="font-size:17px;"></span>&nbsp;Logout</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
@@ -476,7 +476,7 @@ body{
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary create_group" name="create_group">Create Group</button>
+        <button type="button" class="btn btn-primary group-create" name="create_group">Create Group</button>
       </div>
       </form>
     </div>
@@ -592,6 +592,7 @@ $(document).ready(function(){
 	
 	$('.group-create').click(function() {
 		var grp_name = $('#grp_name').val();
+		alert(grp_name);
 		//var frnd_name = friend_id;
 		//console.log(friend_id);
 		request = $.ajax({
